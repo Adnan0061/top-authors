@@ -20,7 +20,6 @@ const Authors = () => {
         }
     }
 
-    console.log(selectedAuthor)
     return (
         <div style={{width:'95%', margin: '0 auto'}}>
             <div className='top-box'>
