@@ -1,0 +1,39 @@
+body{
+ background-color: lightyellow;
+}
+
+.top-box{
+
+    background-color: lightgreen;
+    margin: 10px;
+    border: 5px solid darkgreen;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    color: darkgreen;
+}
+
+.top-box h2, .top-box h3{
+    font-size: 36px;
+}
+.top-box h3{
+    font-size: 28px;
+}
+
+.result-container{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.authors{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr)
+}
+
+button{
+    background-color: darkgreen;
+    color: lightgreen;
+    padding: 10px 30px;
+    border: 3px solid greenyellow;
+    border-radius: 5px;
+}
