@@ -1,6 +1,7 @@
 .selected-author{
     display: flex;
     align-items: center;
+    flex-direction: row;
     gap: 5px;
     margin: 5px;
     background-color: lightgreen;

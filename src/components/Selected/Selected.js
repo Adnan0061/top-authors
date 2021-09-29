@@ -3,7 +3,7 @@ import './Selected.css'
 
 const Selected = (props) => {
     const selectedAuthors = props.selectedAuthor
-
+    const remove = props.remove
     let totalBook = 0
     let counter = 0;
     const total =() => {
@@ -13,14 +13,6 @@ const Selected = (props) => {
         } 
         return totalBook
     }
-    // let totalAuthor = 0
-    // const totalPerson =() => {
-    //     for (const author of selectedAuthors) {
-    //         totalAuthor = totalAuthor + 1;
-    //     } 
-    //     return totalAuthor
-    // }
-
     
     return (
         <div>
@@ -32,7 +24,7 @@ const Selected = (props) => {
             <div>
                 <h2>Selected Authors</h2>
                 {
-                    selectedAuthors.map(author => <SelectedDetails key={author.id} author={author}></SelectedDetails> ) 
+                    selectedAuthors.map(author => <SelectedDetails key={author.id} author={author} remove={remove}></SelectedDetails> ) 
                 }
             </div>
         </div>

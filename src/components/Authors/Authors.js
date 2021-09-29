@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb, getDb } from '../../utilities/LocalStorage';
 import Author from '../Author/Author';
 import Selected from '../Selected/Selected';
 import './Authors.css'
@@ -6,11 +7,42 @@ import './Authors.css'
 const Authors = () => {
     const [loadAuthors, setLoadAuthors] = useState([])
     const [selectedAuthor, setSelectedAuthor] = useState([])
-
     useEffect( () => {
         fetch('./authors.json')
         .then(res => res.json())
         .then(data => setLoadAuthors(data))
+    },[])
+    
+
+    // console.log(JSON.parse(getDb()))
+    let initialDb = [];
+    
+    const initDb =() => {
+        const localNames = JSON.parse(getDb())
+        // console.log(localNames)
+
+        if(localNames !== null){
+            localNames.map(nameAut => {
+                // console.log(nameAut)
+                for(const author of loadAuthors){
+                    // console.log(author.name)
+                    if(author.name === nameAut){
+                        initialDb.push(author);
+                    }
+                }
+                // console.log(initialDb)
+                return initialDb
+            });
+        }
+        // console.log(initialDb)
+        return initialDb;
+    }
+
+    // const initialSelected = initDb(); 
+
+    useEffect(()=>{
+        setSelectedAuthor(initDb())
+        // console.log('hello', initDb())
     },[])
 
     const selected = (author) => {
@@ -18,6 +50,14 @@ const Authors = () => {
             const newSelected = [...selectedAuthor, author]
             setSelectedAuthor(newSelected)
         }
+        addToDb(author.name)
+    }
+    const remove = (author) => {
+        console.log(selectedAuthor)
+        const newSelectedAuthor = selectedAuthor.filter(ele => ele !== author);
+        console.log(newSelectedAuthor)
+        setSelectedAuthor(newSelectedAuthor)
+        
     }
 
     return (
@@ -33,7 +73,7 @@ const Authors = () => {
                     }
                 </div>
                 <div>
-                    <Selected selectedAuthor={selectedAuthor}></Selected>
+                    <Selected selectedAuthor={selectedAuthor} remove ={remove}></Selected>
                 </div>
             </div>
 
