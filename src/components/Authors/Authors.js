@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { addToDb, getDb } from '../../utilities/LocalStorage';
+import { addToDb, getDb, removeDb } from '../../utilities/LocalStorage';
 import Author from '../Author/Author';
 import Selected from '../Selected/Selected';
 import './Authors.css'
 
 const Authors = () => {
+    
     const [loadAuthors, setLoadAuthors] = useState([])
     const [selectedAuthor, setSelectedAuthor] = useState([])
     useEffect( () => {
@@ -12,40 +13,30 @@ const Authors = () => {
         .then(res => res.json())
         .then(data => setLoadAuthors(data))
     },[])
-    
 
-    // console.log(JSON.parse(getDb()))
-    let initialDb = [];
-    
+    useEffect(()=>{ 
+        setSelectedAuthor(initDb())
+    },[loadAuthors])
+
     const initDb =() => {
         const localNames = JSON.parse(getDb())
-        // console.log(localNames)
-
+        let initialDb = [];
         if(localNames !== null){
             localNames.map(nameAut => {
-                // console.log(nameAut)
                 for(const author of loadAuthors){
-                    // console.log(author.name)
                     if(author.name === nameAut){
                         initialDb.push(author);
                     }
                 }
-                // console.log(initialDb)
                 return initialDb
             });
         }
-        // console.log(initialDb)
         return initialDb;
     }
 
-    // const initialSelected = initDb(); 
-
-    useEffect(()=>{
-        setSelectedAuthor(initDb())
-        // console.log('hello', initDb())
-    },[])
-
     const selected = (author) => {
+        // setSelectedAuthor(initDb()) 
+        // setSelectedAuthor(initDb())
         if(!selectedAuthor.includes(author)){
             const newSelected = [...selectedAuthor, author]
             setSelectedAuthor(newSelected)
@@ -57,7 +48,7 @@ const Authors = () => {
         const newSelectedAuthor = selectedAuthor.filter(ele => ele !== author);
         console.log(newSelectedAuthor)
         setSelectedAuthor(newSelectedAuthor)
-        
+        removeDb(author.name)
     }
 
     return (

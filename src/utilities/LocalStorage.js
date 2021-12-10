@@ -12,8 +12,16 @@ const addToDb = (item) => {
 }
 
 const updateDb = (db) => {
+
     localStorage.setItem('added_author', JSON.stringify(db))  
     console.log(db)
 }
 
-export {getDb, addToDb, updateDb}
+const removeDb = (item) => {
+    const exitingItems = getDb()
+    let lStorage = JSON.parse(exitingItems)
+    const deleted = lStorage.filter(ele => ele !== item)
+    updateDb(deleted)
+}
+
+export {getDb, addToDb, updateDb, removeDb}
